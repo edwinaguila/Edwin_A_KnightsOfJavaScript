@@ -13,7 +13,7 @@ function changePlayer() {
     // if the current player is player 1 at the end of a move
     if (gameState.whoseTurn === 1) {
         let playerTwoHealth = document.getElementById("playerTwoHealth");
-        // conversts the innerHTML from string to a number and stores it in a variable
+        // converts the innerHTML from string to a number and stores it in a variable
         let playerTwoHealthNum = Number(playerTwoHealth.innerHTML);
         // reduces by 10
         playerTwoHealthNum -= 10;
