@@ -132,16 +132,64 @@ function attackPlayerTwo() {
 
 function attackPlayerOne() {
     if (gameState.whoseTurn === 2) {
-        let playerOneHealth = document.getElementById("playerOneHealth");
-        let playerOneHealthNum = Number(playerOneHealth.innerHTML);
-        playerOneHealthNum -= 10;
-        playerOneHealth.innerHTML = playerOneHealthNum;
+        
+        let playerOneHealth = document.getElementById("playerOneHealth"); // grabbing HTML element of id playerOneHealth
+        let playerOneHealthNum = Number(playerOneHealth.innerHTML); // turning HTML element into actual number
+        playerOneHealthNum -= 10; // this is subtracting that number by however many (10 in this case) whenever function triggers whenever click happens.
+        playerOneHealth.innerHTML = playerOneHealthNum; // 'Rewriting' HTML with the innerHTML because it is changing. Saying it is number but will change upon call.
 
         if (playerOneHealth <= 0) {
             playerOneHealth = 0;
             gameOver();
         } else {
-            changePlayer();
+            changePlayer(); 
         }
+
+    function changeButtonStatus() {
+        let playerOneAttackButton = document.getElementById("playerOneAttack");
+        playerOneAttackButton.disabled = true;
+        playerOneAttackButton.classList.add("inactive");
+        playerOneAttackButton.classList.remove("active");
+
+        let playerTwoAttackButton = document.getElementById("playerTwoAttack");
+        playerTwoAttackButton.disabled = false;
+        playerTwoAttackButton.classList.add("active");
+        playerTwoAttackButton.classList.remove("inactive");
     }
-}
+
+    function animatePlayer() {
+        let playerTwoFrames = [
+            "./images/L_Idle.png",
+            "./images/L_Attack.png"
+        ];
+
+        let playerSprite2 = document.getElementById("playerTwoSprite");
+
+        playerSprite2.src = playerTwoFrames[1];
+        playerSprite2.classList.remove("idle");
+        playerSprite2.classList.add("attack");
+
+        let enemySprite = document.getElementById("playerOneSprite");
+        let enemyDamage = document.getElementById("SFX_PlayerDamage");
+
+        enemySprite.classList.remove("idle");
+        enemySprite.classList.add("damage");
+
+        enemyDamage.play();
+
+        function changePlayerTwoSprite() {
+            enemySprite.classList.remove("damage");
+            enemySprite.classList.add("idle");
+
+            playerSprite.src = playerTwoFrames[0];
+            playerSprite.classList.remove("attack");
+            playerSprite.classList.add("idle");
+        }
+
+
+        setTimeout(changePlayerTwoSprite, 350);
+    }
+
+}}
+
+
