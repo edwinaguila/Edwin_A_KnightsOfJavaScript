@@ -131,20 +131,24 @@ function attackPlayerTwo() {
 }
 
 function attackPlayerOne() {
-    if (gameState.whoseTurn === 2) {
-        
-        let playerOneHealth = document.getElementById("playerOneHealth"); // grabbing HTML element of id playerOneHealth
-        let playerOneHealthNum = Number(playerOneHealth.innerHTML); // turning HTML element into actual number
-        playerOneHealthNum -= 10; // this is subtracting that number by however many (10 in this case) whenever function triggers whenever click happens.
-        playerOneHealth.innerHTML = playerOneHealthNum; // 'Rewriting' HTML with the innerHTML because it is changing. Saying it is number but will change upon call.
+    if (gameState.whoseTurn === 2) { // Have all the code above, just for P1
+        let playerOneHealth = document.getElementById("playerOneHealth");
+        let playerOneHealthNum = Number(playerOneHealth.innerHTML);
+        playerOneHealthNum -= 10;
+        playerOneHealth.innerHTML = playerOneHealthNum;
 
-        if (playerOneHealth <= 0) {
+        if (playerOneHealthNum <=0) {
             playerOneHealth = 0;
             gameOver();
-        } else {
-            changePlayer(); 
         }
+        else {
+            gameState.whoseTurn = 1;
 
+            let playerName = document.getElementById("playerName");
+            playerName.innerHTML = `Player ${gameState.whoseTurn}`;
+           
+        }
+    }
     function changeButtonStatus() {
         let playerOneAttackButton = document.getElementById("playerOneAttack");
         playerOneAttackButton.disabled = true;
@@ -155,6 +159,7 @@ function attackPlayerOne() {
         playerTwoAttackButton.disabled = false;
         playerTwoAttackButton.classList.add("active");
         playerTwoAttackButton.classList.remove("inactive");
+
     }
 
     function animatePlayer() {
@@ -189,7 +194,11 @@ function attackPlayerOne() {
 
         setTimeout(changePlayerTwoSprite, 350);
     }
-
-}}
+    if (gameState.whoseTurn === 2) {
+        animatePlayer();
+        changeButtonStatus();
+        changePlayer();
+    }// add that if statement for p2 here.
+}
 
 
